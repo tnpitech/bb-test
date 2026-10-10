@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>โจทย์ Take-home: ตามหาล็อตวัตถุดิบ</title>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#f5f6f8;--card:#fff;--ink:#1b1f26;--muted:#5b6472;--line:#e3e6ea;--p:#1d5fa8;--p-soft:#e8f0fa;--warn:#b4541d;--warn-soft:#fbeee5;--ok:#2e7d5b;--ok-soft:#e6f3ec}
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#121418;--card:#1b1e24;--ink:#e8eaee;--muted:#9aa3b0;--line:#2b3039;--p:#6ea3e6;--p-soft:#1a2a40;--warn:#e08a55;--warn-soft:#3a2415;--ok:#6cc49a;--ok-soft:#17301f}}
+  *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--ink);font-family:'Sarabun',system-ui,sans-serif;font-size:15px;line-height:1.7}
+  .wrap{max-width:940px;margin:0 auto;padding:28px 16px 64px}
+  h1{font-size:26px;margin:0 0 4px} .sub{color:var(--muted);margin:0 0 20px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px 24px;margin-bottom:18px}
+  .card h2{font-size:19px;margin:0 0 10px;color:var(--p)} .card h3{font-size:15.5px;margin:16px 0 6px}
+  .badge{display:inline-block;background:var(--p-soft);color:var(--p);border-radius:999px;padding:2px 10px;font-size:12.5px;font-weight:600;margin-left:8px;vertical-align:middle}
+  ul,ol{margin:4px 0 6px 20px;padding:0} li{margin:3px 0}
+  table{width:100%;border-collapse:collapse;font-size:14px;margin:8px 0} th,td{border:1px solid var(--line);padding:7px 10px;vertical-align:top;text-align:left} th{background:var(--bg)}
+  code{background:var(--bg);border:1px solid var(--line);border-radius:4px;padding:1px 5px;font-size:13px}
+  .note{background:var(--warn-soft);border-left:4px solid var(--warn);padding:10px 14px;border-radius:8px;margin:12px 0;font-size:14px}
+  .ok{background:var(--ok-soft);border-left:4px solid var(--ok);padding:10px 14px;border-radius:8px;margin:12px 0;font-size:14px}
+  .flow{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:10px 0;font-size:14px}
+  .flow span{background:var(--p-soft);color:var(--p);border-radius:8px;padding:4px 10px;font-weight:600} .flow i{color:var(--muted);font-style:normal}
+  .facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:10px 0}
+  .fact{background:var(--bg);border-radius:8px;padding:8px 12px} .fact .k{font-size:11.5px;color:var(--muted)} .fact .v{font-weight:600}
+  @media print{body{background:#fff}.card{break-inside:avoid}}
+</style>
+</head>
+<body><div class="wrap">
+
+<h1>โจทย์ Take-home: ตามหาล็อตวัตถุดิบที่มีปัญหา</h1>
+<p class="sub">ฉบับนักศึกษา / ผู้จบใหม่ · ตำแหน่ง Data / AI Developer</p>
+
+<div class="card">
+  <h2>สถานการณ์</h2>
+  <p>คุณเป็นทีมข้อมูลของโรงงานผลิตขนมและอาหารแห้งแห่งหนึ่ง ตั้งแต่ปลายเดือนเมษายน 2568 มีลูกค้าร้องเรียนเรื่องท้องเสีย คลื่นไส้ และกลิ่นผิดปกติเพิ่มขึ้นผิดปกติ ฝ่ายประกันคุณภาพ (QA) สงสัยว่าวัตถุดิบบางล็อตเสื่อมสภาพ แต่ไม่รู้ว่าล็อตไหน และไม่รู้ว่าสินค้าไปอยู่ที่ร้านไหนบ้าง</p>
+  <p>ข้อมูลที่มีกระจายอยู่หลายตาราง ตั้งแต่ซัพพลายเออร์จนถึงข้อร้องเรียนลูกค้า งานของคุณคือ<b>เชื่อมโยงข้อมูลทั้งหมดเข้าด้วยกัน</b> แล้วตอบให้ได้ว่า วัตถุดิบล็อตไหนเป็นต้นเหตุ สินค้าล็อตไหนได้รับผลกระทบ และต้องเรียกคืนสินค้าจากร้านไหนบ้าง</p>
+  <div class="flow"><span>ซัพพลายเออร์</span><i>→</i><span>ล็อตวัตถุดิบ</span><i>→</i><span>ล็อตผลิต (Batch)</span><i>→</i><span>การจัดส่ง</span><i>→</i><span>ร้านค้า</span><i>→</i><span>ข้อร้องเรียน</span></div>
+  <div class="facts">
+    <div class="fact"><div class="k">เวลาที่ให้</div><div class="v">3 วัน (ใช้จริง 4–6 ชม.)</div></div>
+    <div class="fact"><div class="k">ภาษา/เครื่องมือ</div><div class="v">อิสระ (Python, Go, SQL, Excel+สคริปต์ ฯลฯ)</div></div>
+    <div class="fact"><div class="k">ใช้ AI ช่วยได้</div><div class="v">ได้ แต่ต้องอธิบายได้ทุกบรรทัด</div></div>
+    <div class="fact"><div class="k">ส่งงาน</div><div class="v">zip หรือ Git repo + README</div></div>
+  </div>
+  <div class="note">ข้อมูลทั้งหมดเป็นข้อมูลสมมติ ชื่อบริษัท ร้านค้า และสินค้าถูกสร้างขึ้นเพื่อการทดสอบเท่านั้น</div>
+</div>
+
+<div class="card">
+  <h2>ชุดข้อมูลที่ให้ (โฟลเดอร์ <code>dataset/</code>)</h2>
+  <table>
+    <tr><th style="width:32%">ไฟล์</th><th>เนื้อหา</th></tr>
+    <tr><td><code>data/suppliers.csv</code></td><td>ซัพพลายเออร์ 8 ราย และวัตถุดิบหลักที่ส่ง</td></tr>
+    <tr><td><code>data/ingredient_lots.csv</code></td><td>ล็อตวัตถุดิบที่รับเข้า 36 ล็อต: lot_id, ingredient, supplier_id, received_date, qty_kg, qc_result, storage_temp_c</td></tr>
+    <tr><td><code>data/products.csv</code></td><td>สินค้า 6 รายการ</td></tr>
+    <tr><td><code>data/production_batches.csv</code></td><td>ล็อตผลิต 65 ล็อต: batch_id, product_id, production_date, line_id, qty_units</td></tr>
+    <tr><td><code>data/batch_ingredients.csv</code></td><td><b>ตารางเชื่อม</b> ว่าล็อตผลิตแต่ละล็อตใช้วัตถุดิบล็อตใดบ้าง (หนึ่ง batch ใช้หลาย lot)</td></tr>
+    <tr><td><code>data/shipments.csv</code></td><td>การจัดส่ง 200 รายการ: batch_id → store_id, ship_date, qty_units</td></tr>
+    <tr><td><code>data/stores.csv</code></td><td>ร้านค้า 20 สาขา</td></tr>
+    <tr><td><code>data/complaints.csv</code></td><td>ข้อร้องเรียนลูกค้า 81 รายการ: วันที่ ร้าน สินค้า รหัสล็อตผลิตบนซอง (<b>บางรายการว่าง</b>) อาการ/ปัญหา</td></tr>
+    <tr><td><code>docs/*.txt</code></td><td>เอกสารภาษาไทย 4 ฉบับ: บันทึก QA, รายงานตรวจสอบหน้าร้าน, ใบส่งมอบวัตถุดิบ, สรุปข้อร้องเรียนบรรจุภัณฑ์ · แบ่งย่อหน้าด้วย <code>[ย่อหน้า n]</code></td></tr>
+  </table>
+  <p style="color:var(--muted);font-size:14px">คำใบ้: เอกสารบางฉบับช่วยอธิบายข้อมูลที่ดูแปลก แต่เอกสารบางฉบับไม่เกี่ยวกับปัญหานี้เลย คุณต้องตัดสินเองว่าอะไรเกี่ยว</p>
+</div>
+
+<div class="card">
+  <h2>ข้อ 1 — โหลดและเชื่อมโยงข้อมูล <span class="badge">30 คะแนน</span></h2>
+  <p>โหลดไฟล์ทั้งหมดเข้าเครื่องมือที่คุณถนัด (pandas, SQLite, DuckDB, PostgreSQL หรืออื่น ๆ) แล้วเชื่อมโยงตารางให้ครบสายตั้งแต่ซัพพลายเออร์ถึงข้อร้องเรียน</p>
+  <h3>สิ่งที่ต้องส่ง</h3>
+  <ol>
+    <li>แผนภาพหรือคำอธิบายว่าตารางไหนเชื่อมกับตารางไหนด้วยคอลัมน์อะไร (วาดมือถ่ายรูปก็ได้)</li>
+    <li>รายงานคุณภาพข้อมูลสั้น ๆ: มีข้อร้องเรียนกี่รายการที่ไม่มีรหัสล็อตผลิต, มีข้อมูลซ้ำหรือค่าว่างที่ไหนบ้าง, คุณจัดการอย่างไร</li>
+    <li>ตอบคำถามต่อไปนี้พร้อมโค้ด/query ที่ใช้:
+      <ul>
+        <li>Q1.1 ล็อตผลิต <code>B0028</code> ใช้วัตถุดิบล็อตใดบ้าง และถูกส่งไปร้านไหนบ้าง</li>
+        <li>Q1.2 วัตถุดิบล็อต <code>L-01-04</code> ถูกใช้ไปทั้งหมดกี่กิโลกรัม ในล็อตผลิตกี่ล็อต</li>
+        <li>Q1.3 ร้านค้าแต่ละสาขามีข้อร้องเรียนที่เป็น "อาการเจ็บป่วยหรือกลิ่น/รสผิดปกติ" กี่รายการ (ไม่นับเรื่องบรรจุภัณฑ์) เรียงจากมากไปน้อย</li>
+      </ul></li>
+  </ol>
+</div>
+
+<div class="card">
+  <h2>ข้อ 2 — หาล็อตวัตถุดิบต้นเหตุ และขอบเขตการเรียกคืน <span class="badge">35 คะแนน</span></h2>
+  <p>นี่คือหัวใจของโจทย์ ใช้ข้อมูลที่เชื่อมโยงแล้วหาคำตอบว่า<b>วัตถุดิบล็อตใดเป็นต้นเหตุ</b> ของข้อร้องเรียนที่เพิ่มขึ้น</p>
+  <h3>สิ่งที่ต้องส่ง</h3>
+  <ol>
+    <li>ระบุล็อตวัตถุดิบต้นเหตุ 1 ล็อต พร้อม<b>หลักฐานเชิงตัวเลข</b> เช่น สัดส่วนล็อตผลิตที่ใช้วัตถุดิบล็อตนี้แล้วถูกร้องเรียน เทียบกับล็อตวัตถุดิบอื่น ๆ (แนะนำให้ทำตารางเปรียบเทียบทุกล็อตวัตถุดิบ)</li>
+    <li>อธิบายว่าทำไมล็อตวัตถุดิบอื่นที่ "ดูน่าสงสัย" (ปรากฏในล็อตผลิตที่มีปัญหาบ่อยเหมือนกัน) จึงไม่ใช่ต้นเหตุ</li>
+    <li>รายการล็อตผลิต<b>ทั้งหมด</b>ที่ใช้วัตถุดิบล็อตต้นเหตุ และรายการร้านค้าทั้งหมดที่ต้องเรียกคืนสินค้า พร้อมจำนวนชิ้นที่ส่งไปแต่ละร้าน <b>รวมถึงล็อตผลิต/ร้านที่ยังไม่มีข้อร้องเรียนเลย</b></li>
+    <li>มีร้านค้าสาขาหนึ่งที่มีข้อร้องเรียนอาการผิดปกติจำนวนมาก แต่สินค้าที่ถูกร้องเรียน<b>ไม่ได้</b>ใช้วัตถุดิบล็อตต้นเหตุ จงระบุสาขานั้นและอธิบายสาเหตุโดยอ้างอิงเอกสารที่ให้</li>
+    <li>ใช้เอกสาร <code>docs/</code> อธิบายว่าทำไมวัตถุดิบล็อตนั้นจึงมีปัญหา (เกิดอะไรขึ้นกับมัน)</li>
+  </ol>
+  <div class="ok">คำตอบที่ดีไม่ใช่แค่ "ล็อต X" แต่คือเหตุผลว่าทำไมต้องเป็น X ไม่ใช่ Y และคุณมั่นใจแค่ไหน</div>
+</div>
+
+<div class="card">
+  <h2>ข้อ 3 — เขียนบันทึกสรุปสำหรับผู้บริหาร <span class="badge">20 คะแนน</span></h2>
+  <p>เขียนบันทึกภาษาไทยไม่เกิน 1 หน้า ถึงผู้จัดการโรงงาน สรุปว่าเกิดอะไรขึ้น ต้นเหตุคืออะไร ต้องเรียกคืนอะไรจากที่ไหน และควรทำอะไรต่อ</p>
+  <ul>
+    <li>จะเขียนเองหรือใช้ LLM ช่วยร่างก็ได้ แต่<b>ทุกตัวเลขและข้อเท็จจริงต้องระบุที่มา</b> ในรูปแบบ <code>[ชื่อไฟล์ › ย่อหน้า n]</code> หรือ <code>[ชื่อไฟล์.csv › คอลัมน์/เงื่อนไขที่ใช้]</code></li>
+    <li>ถ้าใช้ LLM ให้แนบ prompt ที่ใช้ และบอกว่าคุณตรวจสอบผลลัพธ์อย่างไร พบจุดที่ LLM ตอบผิดหรือไม่</li>
+    <li>ต้องไม่นำเรื่องที่ไม่เกี่ยวกับปัญหานี้มาปนในบันทึก</li>
+  </ul>
+</div>
+
+<div class="card">
+  <h2>ข้อ 4 — ภาพแสดงเส้นทางวัตถุดิบ <span class="badge">15 คะแนน</span></h2>
+  <p>สร้างภาพ (ภาพนิ่งหรือแบบโต้ตอบได้) ที่แสดงเส้นทางจากวัตถุดิบล็อตต้นเหตุ → ล็อตผลิต → ร้านค้า โดยให้เห็นว่าร้านไหนมีข้อร้องเรียนมากน้อยเพียงใด (เช่น ขนาดหรือสีของ node) ใช้เครื่องมือใดก็ได้ (networkx + matplotlib/pyvis, Graphviz, d3, หรือแม้แต่ Excel)</p>
+</div>
+
+<div class="card">
+  <h2>การส่งงานและกติกา</h2>
+  <ul>
+    <li><code>README.md</code> บอกวิธีรัน สิ่งที่ทำได้ สิ่งที่ทำไม่ทัน และส่วนที่ใช้ AI ช่วย</li>
+    <li>โค้ดหรือ notebook ที่รันซ้ำได้ตั้งแต่ต้นจนจบ ผลลัพธ์ (ตาราง ภาพ บันทึก) อยู่ในโฟลเดอร์ <code>output/</code></li>
+    <li>ทำไม่ครบไม่เป็นไร ส่งส่วนที่ทำได้และอธิบายว่าติดตรงไหน งานน้อยแต่ถูกและอธิบายได้ มีค่ากว่างานเยอะแต่ตรวจไม่ได้</li>
+  </ul>
+  <h3>รอบสัมภาษณ์ (30–40 นาที)</h3>
+  <p>คุณจะเล่างานของคุณ 10 นาที จากนั้นเราจะให้ข้อมูลเพิ่ม 1 ไฟล์เล็ก ๆ (เช่น ข้อร้องเรียนชุดใหม่) และถามว่าคำตอบของคุณเปลี่ยนไหม ที่เหลือเป็นการคุยเรื่องวิธีคิดของคุณ ไม่มีคำถามท่องจำ</p>
+</div>
+
+<p style="color:var(--muted);font-size:13px">เอกสารนี้เป็นความลับสำหรับกระบวนการสรรหา · เวอร์ชัน 1.0 · ตุลาคม 2569</p>
+</div></body></html>
