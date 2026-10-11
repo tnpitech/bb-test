@@ -15,4 +15,3 @@ total_used_kg = row["total_used_kg"]
 batches = row["batches"]
 print(f"วัตถุดิบล็อต {ING_LOT_ID} ถูกใช้ไปทั้งหมด {total_used_kg} กิโลกรัม ในล็อตผลิต {batches} ล็อต")
 write_csv_data("output/ex1q1p2.csv", ["total_used_kg", "batches"], [[total_used_kg, batches]])
-

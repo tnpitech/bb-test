@@ -22,3 +22,7 @@ ex2q3p2:
 	uv run scripts/ex2q3p2.py
 ex2q4:
 	uv run scripts/ex2q4.py
+
+# Ex.4
+ex4:
+	uv run scripts/ex4.py
