@@ -3,7 +3,7 @@ from write_csv import write_csv_data
 
 print("Q1.3")
 query = f"""
-select st.store_id, st.name as store_name, COUNT(c.complaint_id) as complaint_count 
+select st.store_id, st.name as store_name, count(c.complaint_id) as complaint_count 
 from stores st
 inner join complaints c on st.store_id = c.store_id 
 where c.symptom in ("ปวดท้องรุนแรง", "คลื่นไส้อาเจียน", "กลิ่นหืนผิดปกติ", "รสขมผิดปกติ", "ท้องเสียหลังรับประทาน")
