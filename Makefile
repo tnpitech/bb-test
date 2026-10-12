@@ -1,7 +1,5 @@
 import-data:
 	uv run scripts/import_csv_to_db.py
-run:
-	uv run main.py
 
 # Ex.1
 ex1q1p1:
